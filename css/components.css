@@ -411,27 +411,111 @@
   background: rgba(87,227,137,0.7);
   border: 2px solid var(--purple);
 }
+/* Asteroid-shaped answer capsules in the minigame */
 .mg__capsule {
   position: absolute;
-  transform: translateX(-50%);
-  max-width: 22%;
-  padding: 0.4rem 0.6rem;
-  font-size: 0.8rem;
+  transform: translateX(-50%) rotate(-6deg);
+  max-width: 23%;
+  min-width: 72px;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 700;
   text-align: center;
-  color: var(--ink);
-  background: var(--silver);
-  border: 2px solid var(--purple-deep);
-  border-radius: 999px;
-  box-shadow: 0 0 10px rgba(183,156,255,0.5);
+  line-height: 1.25;
+
+  /* Rocky asteroid texture */
+  color: #f0e8d0;
+  background:
+    radial-gradient(ellipse at 28% 22%, rgba(255,255,220,0.18) 0%, transparent 42%),
+    radial-gradient(ellipse at 72% 68%, rgba(0,0,0,0.35) 0%, transparent 48%),
+    radial-gradient(ellipse at 55% 40%, rgba(0,0,0,0.15) 0%, transparent 55%),
+    linear-gradient(145deg, #6e5f4a, #4a3e2e, #3a3020, #5a4e3a);
+
+  /* Irregular rocky border */
+  border: 2px solid #2e2416;
+  border-radius: 42% 58% 53% 47% / 48% 44% 56% 52%;
+
+  /* Depth shadows + crater hints */
+  box-shadow:
+    inset -4px -4px 10px rgba(0,0,0,0.55),
+    inset  3px  3px  7px rgba(255,240,180,0.10),
+    inset  6px -6px 14px rgba(0,0,0,0.25),
+    0 4px 18px rgba(0,0,0,0.65),
+    0 0 8px  rgba(0,0,0,0.4);
+
+  /* Craters via outline ring on ::before */
+  overflow: visible;
 }
-.mg__capsule--caught { outline: 3px solid var(--yellow); }
+
+/* Crater dimple on each asteroid */
+.mg__capsule::before {
+  content: "";
+  position: absolute;
+  width: 22%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,0,0,0.45), rgba(0,0,0,0.1) 60%, transparent 100%);
+  top: 18%;
+  left: 62%;
+  pointer-events: none;
+}
+.mg__capsule::after {
+  content: "";
+  position: absolute;
+  width: 14%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,0,0,0.4), transparent 70%);
+  bottom: 20%;
+  left: 22%;
+  pointer-events: none;
+}
+
+/* Vary shape and tilt per lane position — deterministic variety */
+.mg__capsule:nth-child(odd) {
+  border-radius: 55% 45% 38% 62% / 44% 56% 46% 54%;
+  transform: translateX(-50%) rotate(9deg);
+}
+.mg__capsule:nth-child(3n) {
+  border-radius: 38% 62% 60% 40% / 56% 38% 62% 44%;
+  transform: translateX(-50%) rotate(-14deg);
+}
+.mg__capsule:nth-child(4n) {
+  border-radius: 62% 38% 44% 56% / 40% 60% 48% 52%;
+  transform: translateX(-50%) rotate(4deg);
+}
+
+/* Hit: glowing green strike */
+.mg__capsule--caught {
+  outline: 3px solid var(--yellow);
+  box-shadow:
+    inset -4px -4px 10px rgba(0,0,0,0.55),
+    0 0 18px var(--yellow),
+    0 0 36px rgba(255,210,63,0.45);
+}
 .mg__capsule--hit {
-  background: #d7f7e4;
-  border-color: var(--alien-green-deep);
+  background:
+    radial-gradient(ellipse at 30% 25%, rgba(87,227,137,0.35), transparent 50%),
+    linear-gradient(145deg, #2a6e3a, #1a4a28, #0f3018);
+  border-color: var(--alien-green);
+  color: #c9ffe1;
+  box-shadow:
+    inset -4px -4px 10px rgba(0,0,0,0.4),
+    0 0 20px rgba(87,227,137,0.6),
+    0 0 40px rgba(87,227,137,0.25);
 }
+
+/* Miss: cracked red glow */
 .mg__capsule--miss {
-  background: #ffe0e0;
-  border-color: var(--danger-deep);
+  background:
+    radial-gradient(ellipse at 35% 30%, rgba(255,80,80,0.3), transparent 50%),
+    linear-gradient(145deg, #6e2a2a, #4a1a1a, #301010);
+  border-color: var(--danger);
+  color: #ffd7d7;
+  box-shadow:
+    inset -4px -4px 10px rgba(0,0,0,0.4),
+    0 0 18px rgba(255,107,107,0.55),
+    0 0 36px rgba(255,107,107,0.2);
 }
 .mg__help {
   color: var(--muted-on-dark);
