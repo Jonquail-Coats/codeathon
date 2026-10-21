@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Martian Mindhunter — Test Runner</title>
+    <style>
+      /* Minimal, self-contained styling for the test report. The report never
+         relies on color alone: every row also shows the literal PASS/FAIL word
+         (accessibility ethos, R11.3). */
+      body {
+        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        margin: 1.5rem;
+        line-height: 1.4;
+        color: #0b1020;
+        background: #f4f6fb;
+      }
+      h1 {
+        font-size: 1.4rem;
+      }
+      .summary {
+        padding: 0.4rem 0.6rem;
+        border-radius: 6px;
+        display: inline-block;
+      }
+      .summary.pass {
+        background: #d6f5dd;
+        border: 2px solid #1a7f37;
+      }
+      .summary.fail {
+        background: #fde0e0;
+        border: 2px solid #b42318;
+      }
+      .summary.empty {
+        background: #eceff5;
+        border: 2px solid #5b6472;
+      }
+      ul.results {
+        list-style: none;
+        padding: 0;
+        margin: 1rem 0 0;
+      }
+      li.result {
+        padding: 0.4rem 0.6rem;
+        border-radius: 6px;
+        margin-bottom: 0.35rem;
+        border: 1px solid transparent;
+      }
+      li.result.pass {
+        background: #eafaef;
+        border-color: #1a7f37;
+      }
+      li.result.fail {
+        background: #fdeeee;
+        border-color: #b42318;
+      }
+      .badge {
+        font-weight: 700;
+        font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+        padding: 0 0.4rem;
+        border-radius: 4px;
+        color: #fff;
+      }
+      li.result.pass .badge {
+        background: #1a7f37;
+      }
+      li.result.fail .badge {
+        background: #b42318;
+      }
+      pre.detail {
+        white-space: pre-wrap;
+        word-break: break-word;
+        margin: 0.4rem 0 0;
+        padding: 0.5rem;
+        background: #fff;
+        border: 1px solid #d0d5dd;
+        border-radius: 4px;
+        font-size: 0.85rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Martian Mindhunter — Test Runner</h1>
+    <p>
+      Served over <code>http://</code> (ES modules are blocked on
+      <code>file://</code>). Results render below.
+    </p>
+
+    <div id="report">
+      <p role="status" aria-live="polite">Running tests…</p>
+    </div>
+
+    <!--
+      REGISTER TEST MODULES HERE.
+
+      Every test module imports from ./runner.js and calls test(...) / forAll(...)
+      at module load time, which pushes into the shared registry. Importing a
+      module is therefore all it takes to register its tests. Add one import line
+      per module below, then this page's run() picks them up automatically.
+
+      The harness self-test is always first so a harness regression is obvious.
+      Later tasks append their modules (the tree mirrors js/ per structure.md):
+
+        import "./content/textCleaning.test.js";    // task 3.2
+        import "./content/quizGenerator.test.js";    // tasks 8.3, 8.4, 8.5
+        import "./content/promptFilter.test.js";     // tasks 8.6, 8.7
+        import "./import/fileImporter.test.js";      // task 4.2, 4.3
+        import "./state/appState.test.js";           // tasks 2.2, 2.3
+
+      Keep this list and runner.js's header comment in sync.
+    -->
+    <script type="module">
+      import { run, renderResults } from "./runner.js";
+
+      // --- Registered test modules (import to register) ----------------------
+      import "./runner.selftest.js";
+      import "./vendor/unzip.test.js"; // task 5.1
+      // (later tasks add their test-module imports above this line)
+      // -----------------------------------------------------------------------
+
+      const report = document.getElementById("report");
+      try {
+        const summary = run();
+        renderResults(report, summary);
+        // Expose for any automated/no-network harness checks (task 17.1).
+        window.__MM_TEST_SUMMARY__ = summary;
+      } catch (err) {
+        report.replaceChildren();
+        const pre = document.createElement("pre");
+        pre.className = "detail";
+        pre.setAttribute("role", "status");
+        pre.textContent =
+          "Harness crashed before producing a report:\n" +
+          (err && err.stack ? err.stack : String(err));
+        report.append(pre);
+      }
+    </script>
+  </body>
+</html>

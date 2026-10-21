@@ -1,0 +1,490 @@
+/* components.css — buttons, panels, bubbles, cards, inputs, mascot, minigame.
+ * Visible focus indicators come from theme.css (:focus-visible). Non-color cues
+ * (icons, words, borders) accompany every state so color is never the sole
+ * signal (R6.2/6.3, R8.3, R11.5). */
+
+/* ---------- Buttons ---------- */
+.btn {
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: var(--radius);
+  border: 2px solid var(--purple-deep);
+  background: var(--space-navy-2);
+  color: var(--paper);
+  padding: 0.6rem 1.1rem;
+  transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+}
+.btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: var(--purple);
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn--primary {
+  background: var(--alien-green);
+  border-color: var(--alien-green);
+  color: #06331a; /* dark green-black on green: ~7:1 */
+}
+.btn--primary:hover:not(:disabled) {
+  background: #6ef0a0;
+}
+.btn--ghost {
+  background: transparent;
+  border-color: var(--silver-dim);
+  color: var(--paper);
+}
+
+/* ---------- Screen title & back ---------- */
+/* Screen titles receive focus programmatically on screen change (for screen-
+ * reader flow), but they are not interactive controls, so they don't show the
+ * control focus ring. Interactive elements keep their :focus-visible ring. */
+.screen__title:focus,
+.screen__title:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+.screen__back {
+  padding: 0.4rem 0.8rem;
+}
+
+/* ---------- Setup screen ---------- */
+.setup__tagline {
+  color: var(--muted-on-dark);
+  max-width: 55ch;
+  margin: 0;
+}
+.setup__intro {
+  min-width: 14rem;
+  flex: 1;
+}
+.setup__quickstart,
+.setup__custom {
+  background: var(--space-navy-2);
+  border: 2px solid var(--nebula);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  box-shadow: var(--shadow);
+}
+.setup__subhead {
+  margin-top: 0;
+}
+.setup__sample {
+  width: 100%;
+}
+.setup__label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--paper);
+}
+.setup__textarea {
+  width: 100%;
+  font-family: ui-monospace, "Courier New", monospace;
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: var(--silver);
+  border: 2px solid var(--silver-dim);
+  border-radius: var(--radius);
+  padding: 0.75rem;
+  resize: vertical;
+}
+.setup__textarea::placeholder {
+  color: #5a6484;
+}
+.setup__count {
+  color: var(--muted-on-dark);
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
+}
+
+/* ---------- Bubbles (mode select) ---------- */
+.mode-select__intro {
+  color: var(--muted-on-dark);
+}
+.bubble {
+  width: 100%;
+  text-align: left;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 0.9rem;
+  row-gap: 0.15rem;
+  padding: 1.1rem 1.25rem;
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--purple-deep);
+  background:
+    radial-gradient(120px 60px at 85% -20%, rgba(87, 227, 137, 0.25), transparent),
+    var(--space-navy-2);
+  color: var(--paper);
+  cursor: pointer;
+  transition: transform 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+}
+.bubble:hover:not(:disabled) {
+  transform: translateY(-3px);
+  border-color: var(--alien-green);
+  box-shadow: var(--shadow);
+}
+.bubble:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-style: dashed;
+}
+.bubble__icon {
+  grid-row: 1 / span 2;
+  align-self: center;
+  font-size: 1.9rem;
+  width: 2.6rem;
+  height: 2.6rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--nebula);
+  border: 2px solid var(--purple);
+}
+.bubble__label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+.bubble__blurb {
+  color: var(--muted-on-dark);
+  font-size: 0.92rem;
+}
+.mode-select__footer {
+  margin-top: 0.5rem;
+}
+
+/* ---------- Flashcards ---------- */
+.flashcards__counter {
+  color: var(--muted-on-dark);
+  margin: 0 0 0.5rem;
+}
+.flashcard {
+  display: grid;
+  place-items: center;
+  text-align: center;
+  width: 100%;
+  min-height: 220px;
+  padding: 2rem;
+  font-size: clamp(1.2rem, 1rem + 1.5vw, 1.8rem);
+  font-family: var(--font-display);
+  color: var(--ink);
+  background: linear-gradient(180deg, #ffffff, var(--silver));
+  border: 3px solid var(--purple-deep);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: transform 150ms ease, border-color 150ms ease;
+}
+.flashcard:hover {
+  transform: translateY(-2px);
+}
+.flashcard--revealed {
+  border-color: var(--alien-green);
+  background: linear-gradient(180deg, #eafff2, #cdebd9);
+}
+.flashcard--done {
+  background: var(--space-navy-2);
+  color: var(--paper);
+  border-style: dashed;
+  border-color: var(--alien-green);
+  cursor: default;
+}
+.flashcards__hint {
+  color: var(--muted-on-dark);
+  font-size: 0.9rem;
+  margin-top: 0.75rem;
+}
+
+/* ---------- Multiple choice ---------- */
+.mc__counter,
+.fr__counter,
+.mg__counter {
+  color: var(--muted-on-dark);
+  margin: 0;
+}
+.mc__question,
+.fr__question,
+.mg__prompt {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0.25rem 0 0.75rem;
+}
+.mc__option {
+  font: inherit;
+  text-align: left;
+  padding: 0.8rem 1rem;
+  border-radius: var(--radius);
+  border: 2px solid var(--silver-dim);
+  background: var(--silver);
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+.mc__option:hover:not(:disabled) {
+  border-color: var(--purple-deep);
+}
+.mc__option:disabled {
+  cursor: default;
+}
+.mc__option--correct {
+  border-color: var(--alien-green-deep);
+  background: #d7f7e4;
+  color: #06331a;
+  font-weight: 700;
+}
+.mc__option--wrong {
+  border-color: var(--danger-deep);
+  background: #ffe0e0;
+  color: #5a0808;
+}
+.mc__tag {
+  font-weight: 700;
+}
+.mc__score {
+  font-weight: 700;
+  margin-top: 0.75rem;
+}
+
+/* ---------- Free response ---------- */
+.fr__label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+.fr__input {
+  width: 100%;
+  font: inherit;
+  padding: 0.7rem 0.9rem;
+  border-radius: var(--radius);
+  border: 2px solid var(--silver-dim);
+  background: var(--silver);
+  color: var(--ink);
+}
+.fr__answer {
+  margin-top: 1rem;
+  padding: 0.9rem 1.1rem;
+  border-radius: var(--radius);
+  border: 2px solid var(--alien-green-deep);
+  background: #0f2a1c;
+}
+.fr__answer-label {
+  margin: 0 0 0.25rem;
+  color: var(--alien-green);
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.fr__answer-text {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+/* ---------- Messages ---------- */
+.message {
+  margin: 0.75rem 0;
+  padding: 0.7rem 1rem;
+  border-radius: var(--radius);
+  border-left: 6px solid var(--silver-dim);
+  background: var(--space-navy-2);
+}
+.message--error {
+  border-left-color: var(--danger);
+  background: #2a1414;
+  color: #ffd7d7;
+}
+.message--success {
+  border-left-color: var(--alien-green);
+  background: #0f2a1c;
+  color: #c9ffe1;
+}
+.message--info {
+  border-left-color: var(--purple);
+  color: var(--paper);
+}
+
+/* ---------- Mascot (Marty) ---------- */
+.marty {
+  display: inline-block;
+  line-height: 0;
+}
+.marty--hero {
+  width: clamp(120px, 22vw, 180px);
+}
+.marty--corner {
+  width: 72px;
+}
+.marty--avatar {
+  width: 90px;
+}
+.marty__svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* SVG part fills */
+.marty__saucer { fill: var(--silver-dim); }
+.marty__saucer-top { fill: var(--silver); }
+.marty__dome { fill: rgba(183, 156, 255, 0.35); stroke: var(--purple); stroke-width: 2; }
+.marty__head { fill: var(--alien-green); stroke: var(--purple-deep); stroke-width: 2.5; }
+.marty__light { fill: var(--yellow); }
+.marty__glow { fill: rgba(87, 227, 137, 0.25); }
+.marty__antenna { stroke: var(--purple-deep); stroke-width: 2.5; }
+.marty__antenna-tip { fill: var(--yellow); }
+.marty__eye { fill: #0b1030; }
+.marty__pupil { fill: #ffffff; }
+.marty__eye-line { fill: none; stroke: #0b1030; stroke-width: 2.5; stroke-linecap: round; }
+.marty__mouth { fill: none; stroke: #0b1030; stroke-width: 2.5; stroke-linecap: round; }
+.marty__mouth--celebrate { fill: #0b1030; }
+
+/* Only the active state's eyes/mouth are shown. */
+.marty__eyes,
+.marty__mouth { display: none; }
+.marty--state-idle .marty__eyes--idle,
+.marty--state-idle .marty__mouth--idle,
+.marty--state-thinking .marty__eyes--thinking,
+.marty--state-thinking .marty__mouth--thinking,
+.marty--state-celebrate .marty__eyes--celebrate,
+.marty--state-celebrate .marty__mouth--celebrate,
+.marty--state-encourage .marty__eyes--encourage,
+.marty--state-encourage .marty__mouth--encourage {
+  display: block;
+}
+
+.marty--state-celebrate .marty__light { animation: blink 500ms steps(2) infinite; }
+.marty--state-thinking .marty__antenna-tip { animation: pulse 900ms ease-in-out infinite; }
+@keyframes blink { 50% { opacity: 0.35; } }
+@keyframes pulse { 50% { opacity: 0.4; transform: translateY(-1px); } }
+
+.mode-select__mascot,
+.setup__hero {
+  display: inline-grid;
+  place-items: center;
+}
+
+/* ---------- Minigame ---------- */
+.mg__hud {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-weight: 600;
+}
+.mg__field {
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--nebula);
+  background:
+    radial-gradient(2px 2px at 20% 30%, #fff, transparent),
+    radial-gradient(2px 2px at 70% 20%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 40% 70%, #cfe, transparent),
+    radial-gradient(1.5px 1.5px at 85% 60%, #fff, transparent),
+    radial-gradient(2px 2px at 55% 45%, #fff, transparent),
+    linear-gradient(180deg, #05081f, #0b1030);
+}
+.mg__ufo {
+  position: absolute;
+  bottom: 4%;
+  width: 18%;
+  aspect-ratio: 2 / 1;
+  transform: translateX(-50%);
+  transition: left 120ms ease;
+  background:
+    radial-gradient(60% 55% at 50% 30%, rgba(183,156,255,0.5), transparent 70%);
+}
+.mg__ufo::before {
+  content: "";
+  position: absolute;
+  inset: 35% 0 0 0;
+  border-radius: 50%;
+  background: linear-gradient(180deg, var(--silver), var(--silver-dim));
+  border: 2px solid var(--purple);
+}
+.mg__ufo::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 30%; right: 30%; height: 55%;
+  border-radius: 50% 50% 40% 40%;
+  background: rgba(87,227,137,0.7);
+  border: 2px solid var(--purple);
+}
+.mg__capsule {
+  position: absolute;
+  transform: translateX(-50%);
+  max-width: 22%;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.8rem;
+  text-align: center;
+  color: var(--ink);
+  background: var(--silver);
+  border: 2px solid var(--purple-deep);
+  border-radius: 999px;
+  box-shadow: 0 0 10px rgba(183,156,255,0.5);
+}
+.mg__capsule--caught { outline: 3px solid var(--yellow); }
+.mg__capsule--hit {
+  background: #d7f7e4;
+  border-color: var(--alien-green-deep);
+}
+.mg__capsule--miss {
+  background: #ffe0e0;
+  border-color: var(--danger-deep);
+}
+.mg__help {
+  color: var(--muted-on-dark);
+  font-size: 0.85rem;
+}
+.mg__controls {
+  justify-content: center;
+}
+
+/* ---------- File upload zone ---------- */
+.upload-zone {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  justify-items: center;
+  gap: 0.4rem;
+  padding: 2rem 1.5rem;
+  border: 3px dashed var(--purple-deep);
+  border-radius: var(--radius-lg);
+  background: var(--space-navy);
+  cursor: pointer;
+  transition: border-color 150ms ease, background 150ms ease;
+  text-align: center;
+}
+.upload-zone:hover,
+.upload-zone--drag {
+  border-color: var(--alien-green);
+  background: rgba(87, 227, 137, 0.07);
+}
+.upload-zone--loading {
+  opacity: 0.6;
+  cursor: wait;
+  pointer-events: none;
+}
+.upload-zone__icon {
+  font-size: 2.4rem;
+  line-height: 1;
+}
+.upload-zone__label {
+  font-weight: 600;
+  color: var(--paper);
+}
+.upload-zone__sub {
+  font-size: 0.85rem;
+  color: var(--muted-on-dark);
+}
+.upload-status {
+  margin: 0.6rem 0 0;
+  font-size: 0.92rem;
+  color: var(--alien-green);
+  min-height: 1.4em;
+}
+.setup__quickstart-note {
+  color: var(--muted-on-dark);
+  font-size: 0.88rem;
+  margin: 0.5rem 0 0;
+}

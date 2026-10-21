@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Martian Mindhunter</title>
+    <meta
+      name="description"
+      content="Turn a PDF or DOCX into practice quizzes, entirely in your browser."
+    />
+    <!-- Theme and layout CSS are authored in task 16; linked now so references resolve. -->
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/components.css" />
+  </head>
+  <body>
+    <!-- Single content region; views are swapped in and out here by the router. -->
+    <main id="app" class="app"></main>
+
+    <!-- ARIA live region: user-facing messages are announced to assistive tech. -->
+    <div id="live-region" class="visually-hidden" aria-live="polite" role="status"></div>
+
+    <!-- ES module entry point. Modules are deferred, so the DOM is ready on run. -->
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,100 @@
+/* theme.css — 1990s space-alien palette, typography, and base element styling.
+ *
+ * The palette derives from Marty's colors (alien green, purple outline, silver
+ * saucer, yellow lights, deep-space navy) while meeting WCAG AA contrast:
+ * body text and UI pairs target >= 4.5:1, large text / meaningful graphics /
+ * focus indicators >= 3:1 (design → Palette coordination; R10.1, R10.2, R11.5).
+ */
+
+:root {
+  /* Core palette */
+  --space-navy: #0b1030;      /* page background */
+  --space-navy-2: #141a46;    /* raised surfaces */
+  --nebula: #1f2a6b;          /* panel accents */
+  --alien-green: #57e389;     /* accent / success */
+  --alien-green-deep: #0f7a43;/* green text on light surfaces */
+  --purple: #b79cff;          /* primary accent / headings on dark */
+  --purple-deep: #5b3fb0;     /* borders / focus base */
+  --silver: #e7ebf5;          /* card / bubble surface */
+  --silver-dim: #c3cbe0;      /* muted surface text/border */
+  --yellow: #ffd23f;          /* highlight / warning cue (always with text) */
+  --danger: #ff6b6b;          /* error family on dark */
+  --danger-deep: #a81414;     /* error text on light */
+
+  /* Text */
+  --ink: #0b1030;             /* dark text on light surfaces */
+  --paper: #f4f6ff;           /* light text on dark surfaces */
+  --muted-on-dark: #c6cdeb;
+
+  /* Shape & motion */
+  --radius: 14px;
+  --radius-lg: 22px;
+  --ring: 0 0 0 3px var(--purple), 0 0 0 6px var(--space-navy);
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+
+  --font-ui: "Trebuchet MS", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-display: "Verdana", "Trebuchet MS", system-ui, sans-serif;
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-ui);
+  color: var(--paper);
+  background:
+    radial-gradient(1200px 600px at 20% -10%, rgba(87, 227, 137, 0.12), transparent 60%),
+    radial-gradient(900px 500px at 90% 0%, rgba(183, 156, 255, 0.14), transparent 55%),
+    var(--space-navy);
+  /* Subtle starfield */
+  background-attachment: fixed;
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  line-height: 1.15;
+  color: var(--paper);
+  letter-spacing: 0.01em;
+}
+
+h1 {
+  font-size: clamp(1.6rem, 1.2rem + 2vw, 2.6rem);
+  margin: 0 0 0.25em;
+}
+
+h2 {
+  font-size: clamp(1.15rem, 1rem + 1vw, 1.6rem);
+}
+
+a {
+  color: var(--purple);
+}
+
+/* Visible focus indicator on every interactive element (R11.5). */
+:where(a, button, input, textarea, [tabindex]):focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+  border-radius: 8px;
+}
+
+/* Honor reduced-motion preference. */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

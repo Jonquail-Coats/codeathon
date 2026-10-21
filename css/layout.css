@@ -1,0 +1,137 @@
+/* layout.css — responsive layout from 320px to 1920px (R10.3).
+ * Focus order follows the visual reading sequence (source order is preserved;
+ * no reordering that would break keyboard flow). */
+
+/* Visually-hidden utility for the ARIA live region in index.html. Keeps it in
+ * the accessibility tree while removing it visually. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.app {
+  display: block;
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: clamp(1rem, 0.5rem + 3vw, 2.5rem);
+}
+
+.screen {
+  display: block;
+  animation: screen-in 240ms ease both;
+}
+
+@keyframes screen-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.screen__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.screen__body {
+  display: block;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+}
+
+/* Setup screen layout */
+.setup__header {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.setup__panel {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.setup__divider {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted-on-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.8rem;
+}
+
+/* Mode-select bubbles grid */
+.bubbles {
+  list-style: none;
+  margin: 1.5rem 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.1rem;
+}
+
+.mode-select__header {
+  align-items: flex-start;
+}
+
+/* Multiple choice option list */
+.mc__options {
+  display: grid;
+  gap: 0.7rem;
+  margin: 1rem 0;
+}
+
+/* Minigame field is a fixed-aspect play area */
+.mg__field {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  max-height: 60vh;
+  margin: 1rem 0;
+  overflow: hidden;
+}
+
+/* Responsive: stack on narrow screens down to 320px */
+@media (max-width: 720px) {
+  .setup__panel {
+    grid-template-columns: 1fr;
+  }
+  .setup__divider {
+    padding: 0.25rem 0;
+  }
+  .bubbles {
+    grid-template-columns: 1fr;
+  }
+  .screen__header {
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 360px) {
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
